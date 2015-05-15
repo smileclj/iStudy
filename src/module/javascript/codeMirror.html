@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <base href="../../lib/javascript/plugin/onlineEditor/CodeMirror-master/"/>
+    <link rel="stylesheet" href="lib/codemirror.css">
+    <link rel="stylesheet" href="addon/dialog/dialog.css">
+    <!-- search -->
+    <link rel="stylesheet" href="addon/search/matchesonscrollbar.css">
+    <!--full screen-->
+    <link rel="stylesheet" href="addon/display/fullscreen.css">
+    <!--hint-->
+    <link rel="stylesheet" href="addon/hint/show-hint.css">
+    <!--Simple Scrollbar-->
+    <link rel="stylesheet" href="addon/scroll/simplescrollbars.css">
+    <!--resize-->
+    <!--<style type="text/css">-->
+        <!--.CodeMirror {-->
+            <!--border: 1px solid #eee;-->
+            <!--height: auto;-->
+        <!--}-->
+    <!--</style>-->
+
+    <!-- sublime-->
+    <link rel="stylesheet" href="theme/monokai.css">
+
+    <script src="lib/codemirror.js"></script>
+    <script src="mode/sql/sql.js"></script>
+    <!--search-->
+    <script src="addon/dialog/dialog.js"></script>
+    <script src="addon/search/searchcursor.js"></script>
+    <script src="addon/search/search.js"></script>
+    <script src="addon/scroll/annotatescrollbar.js"></script>
+    <script src="addon/search/matchesonscrollbar.js"></script>
+    <!--active line-->
+    <script src="addon/selection/active-line.js"></script>
+    <!--full screen-->
+    <script src="addon/display/fullscreen.js"></script>
+    <!--hint-->
+    <script src="addon/hint/show-hint.js"></script>
+    <script src="addon/hint/sql-hint.js"></script>
+    <!--Simple Scrollbar-->
+    <script src="addon/scroll/simplescrollbars.js"></script>
+    <!-- sublime keymap-->
+    <script src="keymap/sublime.js"></script>
+</head>
+<body>
+    <dl>
+        <dt>Ctrl-F / Cmd-F</dt><dd>Start searching</dd>
+        <dt>Ctrl-G / Cmd-G</dt><dd>Find next</dd>
+        <dt>Shift-Ctrl-G / Shift-Cmd-G</dt><dd>Find previous</dd>
+        <dt>Shift-Ctrl-F / Cmd-Option-F</dt><dd>Replace</dd>
+        <dt>Shift-Ctrl-R / Shift-Cmd-Option-F</dt><dd>Replace all</dd>
+    </dl>
+    <textarea id="code" name="code" placeholder="Code goes here..."></textarea>
+    <button  onclick="submit()">提交</button>
+    <script>
+        var mime = 'text/x-mariadb';
+        // get mime type
+        if (window.location.href.indexOf('mime=') > -1) {
+            mime = window.location.href.substr(window.location.href.indexOf('mime=') + 5);
+        }
+
+        window.editor = CodeMirror.fromTextArea(document.getElementById('code'), {
+            mode: mime,
+            indentWithTabs: true,
+            smartIndent: true,
+            lineNumbers: true,
+            matchBrackets : true,
+            autofocus: true,
+            extraKeys: {
+                "F11": function(cm) {
+                    cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+                },
+                "Esc": function(cm) {
+                    if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
+                },
+                "Ctrl-L": "autocomplete"
+            },
+            hintOptions: {tables: {
+                users: {name: null, score: null, birthDate: null},
+                countries: {name: null, population: null, size: null}
+            }},
+            //active-line
+            styleActiveLine: true,
+            lineWrapping: true,
+            <!--Simple Scrollbar-->
+            scrollbarStyle: "simple"
+            //sublime
+//            keyMap: "sublime",
+//            theme: "monokai"
+        });
+
+        var submit = function(){
+            console.log(editor.getValue());
+        }
+    </script>
+</body>
+</html>

@@ -45,3 +45,31 @@ var xx = function(){
     console.log('no');
 }*/
 
+/**
+ * demo3
+ * 理解闭包  闭包就是能够读取其他函数内部变量的函数
+ * */
+
+//var name = "The Window";
+//var object = {
+//    name : "My Object",
+//    getNameFunc : function(){
+//        return function(){
+//            return this.name;
+//        };
+//    }
+//};
+//alert(object.getNameFunc()());
+
+
+//var name = "The Window";
+//var object = {
+//    name: "My Object",
+//    getNameFunc: function () {
+//        var that = this;
+//        return function () {
+//            return that.name;
+//        };
+//    }
+//};
+//alert(object.getNameFunc()());
