@@ -73,3 +73,47 @@ var xx = function(){
 //    }
 //};
 //alert(object.getNameFunc()());
+
+/**
+ * demo3
+ * 理解apply call   caller  callee
+ * */
+//call 与 apply 的不同之处在于传参方式不同,apply以数组的形式传递
+
+//var obj1 = {
+//    name : '小明',
+//    say : function(){
+//        console.debug(this.name);
+//    },
+//    run : function(who){
+//        console.debug(who + 'run');
+//    }
+//};
+//
+//var obj2 = {name : '小红'};
+//obj1.say();
+//obj1.say.call(obj2);
+//
+//obj1.run('小明');
+//obj1.run.call(obj2,'小红');
+//obj1.run.apply(obj2,['小红']);
+
+//var fun1 = function(){
+//    var fun2 = function(){
+//        console.debug(fun2.caller);
+//        console.debug(fun1 instanceof Function);
+//        console.debug(fun1 == fun2.caller);
+//
+//        console.debug(fun1.caller);
+//    }
+//    fun2();
+//}
+//fun1();
+
+//(function(){
+//    console.debug(arguments.callee);
+//})();
+
+/**
+ * 原型链
+ * */
