@@ -370,4 +370,76 @@ var demo8_3 = function(){
     my.getArea();
     my.toString();
 }
-demo8_3();
+//demo8_3();
+
+//uber
+var demo8_4 = function(){
+    function One(){}
+    One.prototype.name = 'one';
+    One.prototype.toString = function(){
+        var result = [];
+        if(this.constructor.uber){
+            result[result.length] = this.constructor.uber.toString();
+        }
+        result[result.length] = this.name;
+        //return result.join(',');
+        console.log(result);
+    }
+
+    function Two(){}
+    var F = function(){};
+    F.prototype = One.prototype;
+    Two.prototype = new F();
+    Two.prototype.constructor = Two;
+    Two.uber = One.prototype;
+    Two.prototype.name = 'two';
+
+    function Three(side,height){
+        this.side = side;
+        this.height = height;
+    }
+    var F = function(){};
+    F.prototype = Two.prototype;
+    Three.prototype = new F();
+    Three.prototype.constructor = Three;
+    Three.uber = Two.prototype;
+    Three.prototype.name = 'three';
+    Three.prototype.getArea = function(){
+        console.log('area:' + this.side*this.height/2);
+    }
+
+    console.log(new One());
+    console.log(new Two());
+    console.log(new Three());
+
+    var my = new Three(5,10);
+    my.getArea();
+    my.toString();
+}
+//demo8_4();
+
+//原型属性拷贝法
+var demo8_5 = function(){
+    function extend(Child,Parent){
+        var F = function(){};
+        F.prototype = Parent.prototype;
+        Child.prototype = new F();
+        Child.prototype.constructor = Child;
+        Child.uber = Parent.prototype;
+    }
+
+    function One(){
+        this.name = 'one';
+    }
+    One.prototype.age = 20;
+
+    function Two(){
+        this.name = 'two';
+    }
+
+
+    var c = {};
+    extend(Two,One);
+    console.log("Child:%o",new Two().age);
+}
+demo8_5();
