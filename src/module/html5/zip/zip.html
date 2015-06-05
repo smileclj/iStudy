@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="zip.js"></script>
+    <script src="z-worker.js"></script>
+    <script src="deflate.js"></script>
+    <script src="inflate.js"></script>
+</head>
+<body>
+    <input id="file" type="file" />
+    <input type="button" value="导入" onclick="daoru()">
+    <script>
+        function daoru(){
+            var file = document.getElementById('file').files[0];
+            console.log(file);
+
+            // use a BlobReader to read the zip from a Blob object
+            zip.createReader(new zip.BlobReader(file), function(reader) {
+
+                // get all entries from the zip
+                reader.getEntries(function(entries) {
+                    console.log('entries%o',entries);
+
+                    for(var i = 0;i<entries.length;i++){
+                        entries[i].getData(new zip.TextWriter(), function(text) {
+                            // text contains the entry data as a String
+                            console.log(text);
+
+                            // close the zip reader
+                            reader.close(function() {
+                                // onclose callback
+                            });
+
+                        }, function(current, total) {
+                            // onprogress callback
+                        });
+                    }
+
+                    if (entries.length) {
+                        // get first entry content as text
+                        entries[0].getData(new zip.TextWriter(), function(text) {
+                            // text contains the entry data as a String
+                            console.log(text);
+
+                            // close the zip reader
+                            reader.close(function() {
+                                // onclose callback
+                            });
+
+                        }, function(current, total) {
+                            // onprogress callback
+                        });
+                    }
+                });
+            }, function(error) {
+                // onerror callback
+            });
+        }
+    </script>
+</body>
+</html>
